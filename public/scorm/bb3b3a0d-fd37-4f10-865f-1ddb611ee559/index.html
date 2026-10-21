@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>eeeeee</title>
+    <link rel="stylesheet" href="assets/viewer.css">
+</head>
+<body>
+    private function viewer(string eeeeee): string
+    {
+        eeeeee = htmlspecialchars(eeeeee !== '' ? eeeeee : 'Document', ENT_XML1);
+
+        return <<<HTML
+<!doctype html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>eeeeee</title>
+    <link rel="stylesheet" href="assets/viewer.css">
+</head>
+<body>
+    <main class="viewer-shell" id="viewer-shell">
+        <div id="loading-overlay" class="loading-overlay">
+            <div class="spinner"></div>
+            <span>Memuat modul PDF...</span>
+        </div>
+        <div class="canvas-container">
+            <canvas id="pdf-canvas"></canvas>
+        </div>
+    </main>
+    <nav class="toolbar">
+        <div class="toolbar-group">
+            <button id="previous" type="button" title="Halaman Sebelumnya (<-)">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                <span class="btn-label">Sebelumnya</span>
+            </button>
+            <div class="page-indicator">
+                <input type="number" id="page-input" class="page-input" value="1" min="1" aria-label="Nomor Halaman" title="Ketik nomor halaman lalu tekan Enter">
+                <span class="page-total-sep">/</span>
+                <span id="page-count">1</span>
+            </div>
+            <button id="next" type="button" title="Halaman Berikutnya (->)">
+                <span class="btn-label">Berikutnya</span>
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+        <div class="toolbar-group zoom-group">
+            <button id="zoom-out" type="button" title="Perkecil (-)">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
+                </svg>
+            </button>
+            <span id="zoom-level" class="zoom-level">Fit</span>
+            <button id="zoom-in" type="button" title="Perbesar (+)">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                </svg>
+            </button>
+            <button id="zoom-reset" type="button" class="btn-reset" title="Ukur Pas">Reset</button>
+        </div>
+    </nav>
+    <script>window.__SCORM_PDF_URL__ = 'document.pdf';</script>
+    <script src="assets/pdf.js"></script>
+    <script src="assets/viewer.js"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<?php $questionCount = count($questions); ?>
+<section class="quiz-player">
+    <div class="quiz-player-shell">
+        <a class="quiz-player-back" href="<?= base_url('quiz') ?>">Kembali ke kuis</a>
+        <?= view('dashboard/partials/flash_messages') ?>
+
+        <?php if ($questionCount === 0): ?>
+            <div class="quiz-player-card">
+                <h1><?= esc($quiz['title']) ?></h1>
+                <p>Belum ada pertanyaan pada kuis ini.</p>
+            </div>
+        <?php else: ?>
+            <form id="quiz-player-form" method="post" action="<?= base_url('quiz/' . $quiz['id'] . '/submit') ?>" class="quiz-player-card" novalidate>
+                <?= csrf_field() ?>
+                <header class="quiz-player-header">
+                    <div class="quiz-player-brand">
+                        <img src="<?= base_url('assets/images/logo-bnn.png') ?>" alt="Logo BNN Kota Tanjungpinang">
+                        <strong><?= esc($quiz['title']) ?></strong>
+                    </div>
+                    <div class="quiz-player-count" aria-live="polite"><span id="quiz-current-number">1</span><small>/ <?= $questionCount ?></small></div>
+                </header>
+
+                <div class="quiz-player-progress" aria-hidden="true"><span id="quiz-progress-bar"></span></div>
+
+                <section class="quiz-step is-active" data-step="0">
+                    <p class="quiz-step-label">Data peserta</p>
+                    <h1>Sebelum mulai, isi data diri.</h1>
+                    <div class="quiz-participant-fields">
+                        <label for="participant_name">Nama
+                            <input id="participant_name" name="participant_name" value="<?= esc(old('participant_name')) ?>" maxlength="100" required autocomplete="name">
+                        </label>
+                        <label for="participant_age">Umur
+                            <input id="participant_age" name="participant_age" type="number" value="<?= esc(old('participant_age')) ?>" min="1" max="120" required inputmode="numeric">
+                        </label>
+                    </div>
+                    <button class="mt-5 quiz-next-button" type="button" data-next>Mulai kuis</button>
+                </section>
+
+                <?php foreach ($questions as $index => $question): ?>
+                    <section class="quiz-step" data-step="<?= $index + 1 ?>" aria-hidden="true">
+                        <p class="quiz-step-label">Pertanyaan <?= $index + 1 ?> dari <?= $questionCount ?></p>
+                        <h2><?= esc($question['question']) ?></h2>
+                        <div class="quiz-options">
+                            <?php foreach (['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4] as $key => $number): ?>
+                                <label class="quiz-option">
+                                    <input type="radio" name="answer[<?= $question['id'] ?>]" value="<?= $number ?>">
+                                    <span class="quiz-option-letter"><?= strtoupper($key) ?></span>
+                                    <span><?= esc($question['option_' . $key]) ?></span>
+                                </label>
+                            <?php endforeach; ?>
+                        </div>
+                        <p class="quiz-step-error" role="alert" hidden>Pilih salah satu jawaban untuk melanjutkan.</p>
+                        <div class="quiz-step-actions">
+                            <button class="quiz-previous-button" type="button" data-previous <?= $index === 0 ? 'hidden' : '' ?>>Kembali</button>
+                            <button class="quiz-next-button" type="button" data-next><?= $index + 1 === $questionCount ? 'Kirim jawaban' : 'Lanjut' ?></button>
+                        </div>
+                    </section>
+                <?php endforeach; ?>
+            </form>
+        <?php endif; ?>
+    </div>
+</section>
+
+<?php if ($questionCount > 0): ?>
+<style>
+    .quiz-player { min-height: 720px; padding: 48px 20px; background: #f5f8fc; }
+    .quiz-player-shell { width: min(100%, 560px); margin: 0 auto; }
+    .quiz-player-back { display: inline-block; margin-bottom: 14px; color: #0d4f83; font-size: .88rem; font-weight: 700; }
+    .quiz-player-card { min-height: 620px; padding: 28px; border-radius: 8px; background: #6d97df; color: #0b1729; box-shadow: 0 14px 35px rgba(31, 70, 131, .16); }
+    .quiz-player-header { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .quiz-player-brand { display: flex; min-width: 0; align-items: center; gap: 10px; font-size: .94rem; }
+    .quiz-player-brand img { width: 46px; height: 46px; flex: 0 0 auto; border-radius: 50%; background: #f5a6ad; object-fit: contain; }
+    .quiz-player-brand strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .quiz-player-count { display: grid; width: 48px; height: 48px; flex: 0 0 auto; place-content: center; border: 4px solid #fff; border-right-color: #0c52bf; border-bottom-color: #0c52bf; border-radius: 50%; color: #0b1729; font-size: .8rem; font-weight: 800; line-height: 1; text-align: center; transform: rotate(38deg); }
+    .quiz-player-count span, .quiz-player-count small { transform: rotate(-38deg); }
+    .quiz-player-count small { margin-top: 2px; font-size: .58rem; font-weight: 700; }
+    .quiz-player-progress { height: 7px; margin: 16px 0 34px; overflow: hidden; border-radius: 999px; background: #fff; }
+    .quiz-player-progress span { display: block; width: 0; height: 100%; border-radius: inherit; background: #0751be; transition: width .2s ease; }
+    .quiz-step { display: none; }
+    .quiz-step.is-active { display: block; }
+    .quiz-step-label { margin: 0 0 8px; font-size: .78rem; font-weight: 700; }
+    .quiz-step h1, .quiz-step h2 { margin: 0; font-size: 1.15rem; font-weight: 800; line-height: 1.45; }
+    .quiz-participant-fields, .quiz-options { display: grid; gap: 10px; margin-top: 30px; }
+    .quiz-participant-fields label { display: grid; gap: 7px; font-size: .88rem; font-weight: 700; }
+    .quiz-participant-fields input { width: 100%; min-height: 48px; padding: 10px 12px; border: 1px solid #fff; border-radius: 6px; background: #fff; color: #15223a; }
+    .quiz-option { display: grid; grid-template-columns: 32px minmax(0, 1fr); align-items: center; gap: 10px; min-height: 58px; padding: 10px; border: 2px solid transparent; border-radius: 6px; background: #fff; color: #182136; cursor: pointer; transition: border-color .15s, transform .15s; }
+    .quiz-option:hover { transform: translateY(-1px); }
+    .quiz-option.is-selected, .quiz-option:has(input:checked) { border-color: #0751be; }
+    .quiz-option input { position: absolute; opacity: 0; }
+    .quiz-option-letter { display: grid; width: 32px; height: 32px; place-items: center; border-radius: 50%; background: #bacaf0; font-size: .8rem; font-weight: 800; }
+    .quiz-option.is-selected .quiz-option-letter, .quiz-option:has(input:checked) .quiz-option-letter { background: #0751be; color: #fff; }
+    .quiz-step-actions { display: flex; justify-content: space-between; gap: 12px; margin-top: 26px; }
+    .quiz-next-button, .quiz-previous-button { min-height: 42px; padding: 9px 17px; border: 1px solid transparent; border-radius: 6px; font-size: .88rem; font-weight: 800; }
+    .quiz-next-button { margin-left: auto; background: #0751be; color: #fff; }
+    .quiz-previous-button { border-color: #fff; color: #0b1729; }
+    .quiz-step-error { margin: 12px 0 0; color: #7f1d1d; font-size: .84rem; font-weight: 700; }
+    @media (max-width: 560px) { .quiz-player { min-height: 640px; padding: 24px 12px; } .quiz-player-card { min-height: 560px; padding: 20px; } }
+</style>
+<script>
+    (() => {
+        const form = document.getElementById('quiz-player-form');
+        const steps = Array.from(form.querySelectorAll('.quiz-step'));
+        const currentNumber = document.getElementById('quiz-current-number');
+        const progressBar = document.getElementById('quiz-progress-bar');
+        const questionCount = <?= $questionCount ?>;
+        let activeStep = 0;
+
+        const showStep = (nextStep) => {
+            activeStep = nextStep;
+            steps.forEach((step, index) => { step.classList.toggle('is-active', index === activeStep); step.setAttribute('aria-hidden', String(index !== activeStep)); });
+            const questionNumber = Math.max(1, activeStep);
+            currentNumber.textContent = questionNumber;
+            progressBar.style.width = `${(questionNumber / questionCount) * 100}%`;
+            form.querySelector('.is-active input, .is-active button')?.focus();
+        };
+
+        form.addEventListener('click', (event) => {
+            const nextButton = event.target.closest('[data-next]');
+            const previousButton = event.target.closest('[data-previous]');
+            if (previousButton) { showStep(activeStep - 1); return; }
+            if (!nextButton) return;
+
+            const step = steps[activeStep];
+            const error = step.querySelector('.quiz-step-error');
+            if (activeStep === 0 && !step.querySelector('#participant_name').value.trim()) { step.querySelector('#participant_name').focus(); return; }
+            if (activeStep === 0 && !step.querySelector('#participant_age').value) { step.querySelector('#participant_age').focus(); return; }
+            if (activeStep > 0 && !step.querySelector('input[type="radio"]:checked')) { error.hidden = false; return; }
+            if (error) error.hidden = true;
+            if (activeStep === questionCount) { form.submit(); return; }
+            showStep(activeStep + 1);
+        });
+
+        form.addEventListener('change', (event) => {
+            const option = event.target.closest('.quiz-option');
+            if (option) {
+                option.closest('.quiz-options').querySelectorAll('.quiz-option').forEach((item) => item.classList.toggle('is-selected', item === option));
+            }
+            event.target.closest('.quiz-step')?.querySelector('.quiz-step-error')?.setAttribute('hidden', 'hidden');
+        });
+        showStep(0);
+    })();
+</script>
+<?php endif; ?>

@@ -1,0 +1,95 @@
+<section class="border-b border-slate-200 bg-slate-50" aria-labelledby="layanan-title">
+    <div class="container max-w-6xl py-16 sm:py-20">
+        <div class="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-16">
+            <div class="max-w-2xl">
+                <div class="inline-flex items-center gap-2 mb-6 text-sm font-semibold text-bnn-800">
+                    <span class="w-2 h-2 rounded-full bg-bnn-600" aria-hidden="true"></span>
+                    Layanan publik BNN Kota Tanjungpinang
+                </div>
+                <h1 id="layanan-title" class="text-4xl font-semibold leading-tight tracking-tight text-bnn-950 sm:text-5xl"><?= esc($settings['hero_title']) ?></h1>
+                <p class="max-w-xl mt-6 text-base leading-8 text-slate-600"><?= esc($settings['hero_subtitle']) ?></p>
+                <div class="flex flex-wrap items-center gap-4 mt-8">
+                    <a href="<?= esc($settings['hero_cta_url'], 'attr') ?>" class="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-white transition min-h-11 bg-bnn-800 hover:bg-bnn-950 focus-visible:outline-offset-4">
+                        <?= esc($settings['hero_cta_label']) ?> <span aria-hidden="true">&rarr;</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="relative overflow-hidden shadow-xl bg-bnn-950">
+                <img src="<?= base_url('assets/images/bnn-tpi.png') ?>" alt="Gedung BNN Kota Tanjungpinang" class="object-cover w-full h-64 opacity-80 sm:h-72">
+                <div class="absolute inset-0 bg-gradient-to-t from-bnn-950/90 via-bnn-950/20 to-transparent"></div>
+                <p class="absolute text-sm font-medium leading-6 text-white bottom-5 left-5 right-5">Informasi dan dukungan yang mudah dijangkau masyarakat.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="layanan" class="py-16 bg-white sm:py-20" aria-labelledby="services-title">
+    <div class="container max-w-6xl">
+        <div class="flex flex-col gap-3 pb-6 border-b border-slate-200 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <h2 id="services-title" class="mt-2 text-2xl font-semibold tracking-tight text-bnn-950 sm:text-3xl"><?= esc($settings['services_title']) ?></h2>
+                <p class="max-w-sm text-sm leading-6 text-slate-600"><?= esc($settings['services_body']) ?></p>
+            </div>
+        </div>
+
+        <div class="grid gap-5 mt-10 md:grid-cols-2 xl:grid-cols-3">
+            <?php foreach ($services as $index => $service): ?>
+                <article class="group flex flex-col border border-slate-200 bg-white p-6 transition duration-200 hover:-translate-y-0.5 hover:border-bnn-600 hover:shadow-lg">
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="flex items-center justify-center h-11 w-11 bg-bnn-100 text-bnn-800" aria-hidden="true"><?= $service['icon'] ?></div>
+                        <span class="text-xs font-semibold tracking-[0.16em] text-slate-400"><?= sprintf('%02d', $index + 1) ?></span>
+                    </div>
+                    <h3 class="mt-6 text-lg font-semibold leading-7 text-bnn-950"><?= esc($service['title']) ?></h3>
+                    <p class="flex-1 mt-3 text-sm leading-6 text-slate-600"><?= esc($service['description']) ?></p>
+                    <a class="inline-flex items-center self-start gap-2 mt-6 text-sm font-semibold min-h-10 text-bnn-800 hover:text-bnn-950" href="<?= esc($service_links[$service['title']] ?? '#akses', 'attr') ?>">Selengkapnya <span aria-hidden="true">&rarr;</span></a>
+                </article>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<section id="akses" class="py-16 border-y border-slate-200 bg-slate-50 sm:py-20" aria-labelledby="quick-links-title">
+    <div class="container max-w-5xl">
+        <div class="max-w-2xl">
+            <h2 id="quick-links-title" class="mt-2 text-2xl font-semibold tracking-tight text-bnn-950 sm:text-3xl"><?= esc($settings['quick_links_title']) ?></h2>
+            <p class="mt-4 text-sm leading-7 text-slate-600"><?= esc($settings['quick_links_body']) ?></p>
+        </div>
+        <div class="grid gap-3 mt-8 sm:grid-cols-2">
+            <?php foreach ($quick_links as $index => $link): ?>
+                <a class="group grid min-h-16 grid-cols-[40px_1fr_auto] items-center gap-4 border border-slate-200 bg-white px-4 py-3 transition hover:border-bnn-600 hover:shadow-md" href="<?= esc($link['url'], 'attr') ?>">
+                    <span class="flex items-center justify-center text-xs font-bold h-9 w-9 bg-bnn-100 text-bnn-800" aria-hidden="true"><?= sprintf('%02d', $index + 1) ?></span>
+                    <span class="text-sm font-semibold text-bnn-950"><?= esc($link['title']) ?></span>
+                    <span class="text-lg transition-transform text-bnn-700 group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<section class="py-16 bg-white sm:py-20" aria-labelledby="bnn-fields-title">
+    <div class="container max-w-6xl">
+        <div class="max-w-2xl">
+            <p class="text-sm font-semibold uppercase tracking-[0.18em] text-bnn-700">Bidang utama BNN</p>
+            <h2 id="bnn-fields-title" class="mt-2 text-2xl font-semibold tracking-tight text-bnn-950 sm:text-3xl">Empat bidang untuk layanan yang menyeluruh</h2>
+            <p class="mt-4 text-sm leading-7 text-slate-600">Setiap bidang saling mendukung untuk memberikan informasi, pencegahan, dan pemulihan yang tepat bagi masyarakat.</p>
+        </div>
+        <div class="grid gap-5 mt-10 sm:grid-cols-2 xl:grid-cols-4">
+            <?php
+            $fields = [
+                ['Umum', 'Administrasi, koordinasi, dan dukungan kelembagaan.'],
+                ['Rehabilitasi', 'Pemulihan dan pendampingan melalui pendekatan profesional.'],
+                ['Dayamas', 'Pemberdayaan serta penguatan kapasitas masyarakat.'],
+                ['Pencegahan', 'Edukasi dan pencegahan dini bahaya narkoba.'],
+            ];
+            foreach ($fields as $index => [$title, $description]):
+            ?>
+                <article class="pt-5 border-t-2 border-bnn-600">
+                    <p class="text-xs font-semibold tracking-[0.16em] text-slate-400"><?= sprintf('%02d', $index + 1) ?></p>
+                    <h3 class="mt-3 text-lg font-semibold text-bnn-950">Bidang <?= esc($title) ?></h3>
+                    <p class="mt-2 text-sm leading-6 text-slate-600"><?= esc($description) ?></p>
+                </article>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>

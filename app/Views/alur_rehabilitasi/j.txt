@@ -1,0 +1,66 @@
+<section id="alur" class="py-16 bg-white sm:py-20" aria-labelledby="rehab-process-title">
+    <div class="container max-w-6xl">
+        <div class="max-w-2xl">
+            <p class="text-sm font-semibold uppercase tracking-[0.18em] text-bnn-700">Alur layanan</p>
+            <h2 id="rehab-process-title" class="mt-2 text-2xl font-semibold tracking-tight text-bnn-950 sm:text-3xl">
+                Tahapan rehabilitasi dari awal sampai pemulihan berkelanjutan
+            </h2>
+            <p class="mt-4 text-base leading-8 text-slate-600">
+                Alur ini disusun agar masyarakat dapat memahami setiap tahapan dengan cepat, tanpa kebingungan, dan tanpa merasa terbebani.
+            </p>
+        </div>
+
+        <div class="hidden mt-10 lg:block">
+            <div class="relative">
+                <div class="absolute w-px left-7 top-6 bottom-6 bg-slate-200"></div>
+                <?php foreach ($steps as $index => $step): ?>
+                    <div class="relative pb-8 pl-20 last:pb-0">
+                        <div class="absolute top-0 left-0 flex items-center justify-center text-lg font-bold border rounded-full h-14 w-14 border-slate-200 bg-bnn-50 text-bnn-700">
+                            <?= sprintf('%02d', $index + 1) ?>
+                        </div>
+                        <div class="p-6 border rounded-2xl border-slate-200 bg-slate-50">
+                            <h3 class="text-lg font-semibold text-bnn-950"><?= esc($step['title']) ?></h3>
+                            <p class="max-w-2xl mt-3 text-sm leading-7 text-slate-600"><?= esc($step['description']) ?></p>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <div class="mt-10 space-y-4 lg:hidden">
+            <?php foreach ($steps as $index => $step): ?>
+                <div class="flex gap-4 p-5 bg-white border shadow-sm rounded-2xl border-slate-200">
+                    <div class="flex items-center justify-center w-12 h-12 text-sm font-bold rounded-full shrink-0 bg-bnn-50 text-bnn-700">
+                        <?= sprintf('%02d', $index + 1) ?>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-semibold text-bnn-950"><?= esc($step['title']) ?></h3>
+                        <p class="mt-2 text-sm leading-7 text-slate-600"><?= esc($step['description']) ?></p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<section class="py-16 border-t border-slate-200 bg-slate-50 sm:py-20" aria-labelledby="rehab-support-title">
+    <div class="container max-w-5xl">
+        <div class="p-8 bg-white border rounded-2xl border-slate-200 sm:p-10">
+            <p class="text-sm font-semibold uppercase tracking-[0.18em] text-bnn-700">Dukungan layanan</p>
+            <h2 id="rehab-support-title" class="mt-2 text-2xl font-semibold tracking-tight text-bnn-950 sm:text-3xl">
+                Siap memulai proses rehabilitasi?
+            </h2>
+            <p class="max-w-2xl mt-4 text-base leading-8 text-slate-600">
+                BNN menyediakan layanan yang terarah, profesional, dan mudah diakses agar setiap orang dapat memperoleh bantuan sesuai kebutuhan.
+            </p>
+            <div class="flex flex-wrap gap-3 mt-8">
+                <a href="<?= base_url('pendaftaran-rehabilitasi') ?>" class="inline-flex min-h-11 items-center justify-center rounded-[10px] bg-bnn-800 px-5 py-3 text-sm font-semibold text-white transition hover:bg-bnn-950">
+                    Lanjut ke pendaftaran
+                </a>
+                <a href="<?= base_url('layanan') ?>" class="inline-flex min-h-11 items-center justify-center rounded-[10px] border border-slate-200 px-5 py-3 text-sm font-semibold text-bnn-800 transition hover:border-bnn-600 hover:text-bnn-950">
+                    Kembali ke layanan
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

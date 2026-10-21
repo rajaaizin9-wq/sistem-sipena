@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Modul pdf Potrait</title>
+    <link rel="stylesheet" href="assets/viewer.css">
+</head>
+<body>
+    <main class="viewer-shell">
+        <canvas id="pdf-canvas"></canvas>
+    </main>
+    <nav class="toolbar">
+        <button id="previous" type="button">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+            <span>Sebelumnya</span>
+        </button>
+        <div class="page-indicator">
+            <span id="page-number">1</span> / <span id="page-count">1</span>
+        </div>
+        <button id="next" type="button">
+            <span>Berikutnya</span>
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+    </nav>
+    <script>window.__SCORM_PDF_URL__ = 'document.pdf';</script>
+    <script src="assets/pdf.js"></script>
+    <script src="assets/viewer.js"></script>
+</body>
+</html>
